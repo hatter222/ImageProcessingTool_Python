@@ -1,6 +1,5 @@
 __pycache__/
-*.ui
 *.jpg
 *.png
-Mainwindow.py
 .idea/
+test.py
