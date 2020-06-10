@@ -7,7 +7,7 @@ Opencv
 PyQt5
 
 
-# # Description:
+# Description:
 # JUST A START
 It is a small tool to check very few basic Image filters and basic operations.
 The image can be loaded and converted to grayscale. The following filtering and Operations can be done on the image .
