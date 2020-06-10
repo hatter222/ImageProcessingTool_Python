@@ -3,7 +3,9 @@ Small project using QT
 
 # Requirements:
 Python 3
-Opencv 
+
+Opencv
+
 PyQt5
 
 
