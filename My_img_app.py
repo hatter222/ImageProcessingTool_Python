@@ -1,11 +1,13 @@
 import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5.QtCore import pyqtSlot
+
 from Mainwindow import Ui_Form
 import cv2
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QFileDialog
 import numpy as np
-
+from Processing import Thread
 
 class Mainwindow(QtWidgets.QMainWindow):
 
@@ -23,7 +25,7 @@ class Mainwindow(QtWidgets.QMainWindow):
         self.initUI()
 
     def initUI(self):
-
+    #function to initialise the buttons
         self.ui.Load.clicked.connect(self.slot_load)
         self.ui.Gray_scale.clicked.connect(self.slot_gray)
         self.ui.Mean.clicked.connect(self.set_mean)
@@ -35,8 +37,8 @@ class Mainwindow(QtWidgets.QMainWindow):
         self.ui.Dilation.clicked.connect(self.set_dilation)
         self.ui.Closing.clicked.connect(self.set_closing)
         self.ui.Opening.clicked.connect(self.set_opening)
-
-
+        self.ui.Open_camera.clicked.connect(self.open_camera)
+        self.ui.Load_Video.clicked.connect(self.load_video)
 
 
     def slot_load(self):
@@ -182,7 +184,34 @@ class Mainwindow(QtWidgets.QMainWindow):
         error_dialog.exec()
 
 
-app = QtWidgets.QApplication(sys.argv)
-w = Mainwindow()
-w.show()
-app.exec()
+    @pyqtSlot(QImage)
+    def setImage(self, image):
+        pixmap = QPixmap.fromImage(image)
+        h = self.ui.Screen_1.height()
+        w = self.ui.Screen_1.width()
+        self.ui.Screen_1.setPixmap(pixmap.scaled(w, h, QtCore.Qt.KeepAspectRatio))
+        self.ui.Screen_2.setPixmap(pixmap.scaled(w, h, QtCore.Qt.KeepAspectRatio))
+
+    def open_camera(self):
+         th = Thread(self)
+         th.changePixmap.connect(self.setImage)
+         th.start()
+
+    def load_video(self):
+        print("load")
+        file = str(QFileDialog.getOpenFileName(self, "Open Image", " ", " "))
+        filename = file[2:-6]
+        th = Thread(self)
+        th.load(filename)
+        th.changePixmap.connect(self.setImage)
+        th.start()
+
+
+
+
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    w = Mainwindow()
+    w.show()
+    app.exec()

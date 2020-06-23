@@ -42,7 +42,7 @@ class Ui_Form(object):
         self.Screen_2.setObjectName("Screen_2")
         self.horizontalLayout.addWidget(self.Screen_2)
         self.verticalLayoutWidget = QtWidgets.QWidget(self.dockWidgetContents)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 20, 160, 411))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 20, 160, 450))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -50,6 +50,12 @@ class Ui_Form(object):
         self.Load = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.Load.setObjectName("Load")
         self.verticalLayout.addWidget(self.Load)
+        self.Load_Video = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.Load_Video.setObjectName("Load_Video")
+        self.verticalLayout.addWidget(self.Load_Video)
+        self.Open_camera = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.Open_camera.setObjectName("Open_camera")
+        self.verticalLayout.addWidget(self.Open_camera)
         self.Gray_scale = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.Gray_scale.setObjectName("Gray_scale")
         self.verticalLayout.addWidget(self.Gray_scale)
@@ -105,6 +111,8 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.Load.setText(_translate("Form", "Load"))
+        self.Load_Video.setText(_translate("Form", "Load_Video"))
+        self.Open_camera.setText(_translate("Form", "Open_camera"))
         self.Gray_scale.setText(_translate("Form", "Gray_scale"))
         self.Mean.setText(_translate("Form", "Mean"))
         self.Median.setText(_translate("Form", "Median"))
@@ -117,3 +125,13 @@ class Ui_Form(object):
         self.Clear.setText(_translate("Form", "Clear"))
         self.label.setText(_translate("Form", "Processed"))
         self.label_2.setText(_translate("Form", "Original"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
