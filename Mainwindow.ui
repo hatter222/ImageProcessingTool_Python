@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1107</width>
-    <height>530</height>
+    <width>1179</width>
+    <height>679</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <rect>
      <x>9</x>
      <y>29</y>
-     <width>1091</width>
+     <width>1161</width>
      <height>491</height>
     </rect>
    </property>
@@ -216,6 +216,19 @@
         </property>
         <property name="text">
          <string>Original</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Facedetection">
+        <property name="geometry">
+         <rect>
+          <x>1040</x>
+          <y>30</y>
+          <width>93</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Face_detection</string>
         </property>
        </widget>
       </widget>

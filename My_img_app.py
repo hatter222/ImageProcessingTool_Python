@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QFileDialog
 import numpy as np
 from Processing import Thread
 
+
 class Mainwindow(QtWidgets.QMainWindow):
 
     def __init__(self):
@@ -25,7 +26,7 @@ class Mainwindow(QtWidgets.QMainWindow):
         self.initUI()
 
     def initUI(self):
-    #function to initialise the buttons
+        # function to initialise the buttons
         self.ui.Load.clicked.connect(self.slot_load)
         self.ui.Gray_scale.clicked.connect(self.slot_gray)
         self.ui.Mean.clicked.connect(self.set_mean)
@@ -40,16 +41,15 @@ class Mainwindow(QtWidgets.QMainWindow):
         self.ui.Open_camera.clicked.connect(self.open_camera)
         self.ui.Load_Video.clicked.connect(self.load_video)
 
-
     def slot_load(self):
         print("load")
-        file = str(QFileDialog.getOpenFileName(self,"Open Image"," "," "))
-        #print(file[-9:-6])
+        file = str(QFileDialog.getOpenFileName(self, "Open Image", " ", " "))
+        # print(file[-9:-6])
 
         if file == None:
             self.msg = "Load input"
             self.display()
-        elif file[-9:-6]=='jpg' or file[-9:-6]=='png':
+        elif file[-9:-6] == 'jpg' or file[-9:-6] == 'png':
 
             self.image = cv2.imread(file[2:-6], 1)
             img = self.conv2Qimage()
@@ -62,7 +62,7 @@ class Mainwindow(QtWidgets.QMainWindow):
             self.ui.Screen_2.setPixmap(pixmap.scaled(w, h, QtCore.Qt.KeepAspectRatio))
             self.text = "Load"
             self.ui.usedcommand.setText(self.text)
-        else :
+        else:
             self.msg = "Load correct input"
             self.display()
 
@@ -89,24 +89,31 @@ class Mainwindow(QtWidgets.QMainWindow):
     def set_mean(self):
         self.filters = "mean"
         self.slot_filter()
+
     def set_median(self):
         self.filters = "median"
         self.slot_filter()
+
     def set_gaussian(self):
         self.filters = "gaussian"
         self.slot_filter()
+
     def set_bilateral(self):
         self.filters = "bilateral"
         self.slot_filter()
+
     def set_erosion(self):
         self.filters = "erosion"
         self.slot_filter()
+
     def set_dilation(self):
         self.filters = "Dilation"
         self.slot_filter()
+
     def set_closing(self):
         self.filters = "closing"
         self.slot_filter()
+
     def set_opening(self):
         self.filters = "opening"
         self.slot_filter()
@@ -118,8 +125,6 @@ class Mainwindow(QtWidgets.QMainWindow):
         self.gray = None
         self.load_flag = False
         self.gray_flag = False
-
-
 
     def slot_filter(self):
         if self.load_flag:
@@ -155,11 +160,11 @@ class Mainwindow(QtWidgets.QMainWindow):
                 self.ui.Screen_1.setPixmap(pixmap.scaled(w, h, QtCore.Qt.KeepAspectRatio))
                 self.text = "gray" + "-->" + self.filters + " with kernel-" + str(num)
                 self.ui.usedcommand.setText(self.text)
-            else :
+            else:
                 self.msg = "Gray Image is not Loaded"
                 self.display()
         else:
-            self.msg ="Input Image is not Loaded"
+            self.msg = "Input Image is not Loaded"
             self.display()
 
     def conv2Qimage(self):
@@ -183,19 +188,21 @@ class Mainwindow(QtWidgets.QMainWindow):
         error_dialog.showMessage(self.msg)
         error_dialog.exec()
 
-
-    @pyqtSlot(QImage)
-    def setImage(self, image):
-        pixmap = QPixmap.fromImage(image)
+    @pyqtSlot(QImage,QImage)
+    def setImage(self, image1,image2):
+        pixmap1 = QPixmap.fromImage(image1)
+        pixmap2 = QPixmap.fromImage(image2)
         h = self.ui.Screen_1.height()
         w = self.ui.Screen_1.width()
-        self.ui.Screen_1.setPixmap(pixmap.scaled(w, h, QtCore.Qt.KeepAspectRatio))
-        self.ui.Screen_2.setPixmap(pixmap.scaled(w, h, QtCore.Qt.KeepAspectRatio))
+        self.ui.Screen_1.setPixmap(pixmap1.scaled(w, h, QtCore.Qt.KeepAspectRatio))
+        self.ui.Screen_2.setPixmap(pixmap2.scaled(w, h, QtCore.Qt.KeepAspectRatio))
 
     def open_camera(self):
-         th = Thread(self)
-         th.changePixmap.connect(self.setImage)
-         th.start()
+        filename = None
+        th = Thread(self)
+        th.load(filename)
+        th.changePixmap.connect(self.setImage)
+        th.start()
 
     def load_video(self):
         print("load")
@@ -205,9 +212,6 @@ class Mainwindow(QtWidgets.QMainWindow):
         th.load(filename)
         th.changePixmap.connect(self.setImage)
         th.start()
-
-
-
 
 
 if __name__ == '__main__':
