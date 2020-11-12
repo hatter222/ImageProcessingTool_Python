@@ -12,8 +12,6 @@ class Thread(QThread):
         self.set_filename = set_filename
         self.reference = None
 
-
-
     def run(self):
         if self.set_filename == None :
             cap = cv2.VideoCapture(0)
@@ -36,5 +34,5 @@ class Thread(QThread):
         detector.detect_faces(self.image)
 
 
-
+#this doesnt qork welell
 
