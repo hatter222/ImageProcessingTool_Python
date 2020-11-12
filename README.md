@@ -28,9 +28,6 @@ So far implemented only for Images.
  4) Closing
  
  
- 
- ## BIG PICTURE
- 
- Make it applicable for Video and Implement Major functionalities such as edge detection , contour detection etc. 
+
  
  
